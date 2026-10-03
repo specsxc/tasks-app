@@ -20,7 +20,6 @@ function App() {
       <section>Filtrowanie</section> */}
 
       <section className="text-center">
-        <h2>Lista tasków</h2>
         <TaskList></TaskList>
       </section>
     </div>
