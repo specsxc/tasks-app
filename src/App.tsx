@@ -53,7 +53,11 @@ function App() {
       <FilterTask filter={filter} setFilter={setFilter}></FilterTask>
 
       <section className="text-center">
-        <TaskList tasks={filterTasks} setTasks={setTasks}></TaskList>
+        <TaskList
+          filterTasks={filterTasks}
+          tasks={tasks}
+          setTasks={setTasks}
+        ></TaskList>
       </section>
     </div>
   );

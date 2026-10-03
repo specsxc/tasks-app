@@ -2,7 +2,11 @@ import type { Task, TasksListProps } from "../types/types";
 import { useState } from "react";
 import { NavLink } from "react-router";
 
-export default function TaskList({ tasks, setTasks }: TasksListProps) {
+export default function TaskList({
+  tasks,
+  filterTasks,
+  setTasks,
+}: TasksListProps) {
   const [deleteId, setDeleteId] = useState<number | null>(null);
   const [open, setOpen] = useState(false);
 
@@ -30,8 +34,8 @@ export default function TaskList({ tasks, setTasks }: TasksListProps) {
 
   return (
     <div className="flex flex-col gap-3">
-      {tasks &&
-        tasks.map((task: Task) => (
+      {filterTasks &&
+        filterTasks.map((task: Task) => (
           <div
             className="flex items-center rounded-xl border border-white px-4 py-2"
             key={task.id}

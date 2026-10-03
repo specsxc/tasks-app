@@ -8,6 +8,7 @@ export type Task = {
 };
 
 export type TasksListProps = {
+  filterTasks: Task[];
   tasks: Task[];
   setTasks: Dispatch<SetStateAction<Task[]>>;
 };
