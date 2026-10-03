@@ -1,8 +1,9 @@
-import { useParams } from "react-router";
-import { NavLink } from "react-router";
 import type { Task } from "../types/types";
 import type { SubmitEvent } from "react";
+import { useParams } from "react-router";
+import { NavLink } from "react-router";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 export default function EditTask() {
   const { id } = useParams();
@@ -10,6 +11,7 @@ export default function EditTask() {
   const task = taskList.find((task: Task) => task.id === Number(id));
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
+  const navigate = useNavigate();
 
   function editTask(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -21,6 +23,7 @@ export default function EditTask() {
       return task;
     });
     localStorage.setItem("myTasks", JSON.stringify(newTasks));
+    navigate("/");
   }
 
   return (
@@ -55,7 +58,7 @@ export default function EditTask() {
               type="submit"
               className="mt-3 w-1/2 cursor-pointer rounded-2xl border border-white py-2 hover:text-green-700"
             >
-              Add
+              Edit
             </button>
             <NavLink
               to="/"

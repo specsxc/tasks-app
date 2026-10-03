@@ -2,10 +2,12 @@ import { NavLink } from "react-router";
 import { useState } from "react";
 import type { Task } from "../types/types";
 import type { SubmitEvent } from "react";
+import { useNavigate } from "react-router";
 
 export default function AddTask() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const navigate = useNavigate();
 
   function addTask(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -21,6 +23,7 @@ export default function AddTask() {
     localStorage.setItem("myTasks", JSON.stringify(tasks));
     setTitle("");
     setDescription("");
+    navigate("/");
   }
 
   return (
