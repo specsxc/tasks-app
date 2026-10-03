@@ -1,15 +1,12 @@
 import type { Task } from "../types/types";
 import { useState } from "react";
+import { NavLink } from "react-router";
 
 export default function TaskList() {
   const [deleteId, setDeleteId] = useState<number | null>(null);
   const [open, setOpen] = useState(false);
   const taskList = JSON.parse(localStorage.getItem("myTasks") || "");
   console.log(taskList);
-
-  function editTask(id: number) {
-    console.log(id);
-  }
 
   function deleteTask(id: number | null) {
     if (id === null) return;
@@ -33,12 +30,9 @@ export default function TaskList() {
           >
             <p className="w-3/5 text-left">{task.title}</p>
             <p className="w-1/5">{task.completed ? "Completed" : "X"}</p>
-            <button
-              className="w-1/5 cursor-pointer"
-              onClick={() => editTask(task.id)}
-            >
+            <NavLink to={`/task/${task.id}`} className="w-1/5 cursor-pointer">
               Edit
-            </button>
+            </NavLink>
             <button
               onClick={() => showModal(task.id)}
               className="w-1/5 cursor-pointer"
