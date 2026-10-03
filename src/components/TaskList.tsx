@@ -1,17 +1,10 @@
-import type { Task } from "../types/types";
-import { useState, useEffect } from "react";
+import type { Task, TasksListProps } from "../types/types";
+import { useState } from "react";
 import { NavLink } from "react-router";
 
-export default function TaskList() {
+export default function TaskList({ tasks, setTasks }: TasksListProps) {
   const [deleteId, setDeleteId] = useState<number | null>(null);
   const [open, setOpen] = useState(false);
-  const taskList = JSON.parse(localStorage.getItem("myTasks") || "");
-  const [tasks, setTasks] = useState(taskList);
-
-  useEffect(() => {
-    console.log(tasks);
-    localStorage.setItem("myTasks", JSON.stringify(tasks));
-  }, [tasks]);
 
   function deleteTask(id: number | null) {
     if (id === null) return;

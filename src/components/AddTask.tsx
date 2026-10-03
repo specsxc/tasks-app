@@ -12,14 +12,14 @@ export default function AddTask() {
   function addTask(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!title) return;
-    const tasks = JSON.parse(localStorage.getItem("myTasks") || "");
-    const task: Task = {
-      id: tasks.length,
+    const tasks = JSON.parse(localStorage.getItem("myTasks") || "[]");
+    const newTask: Task = {
+      id: Date.now(),
       title,
       description,
       completed: false,
     };
-    tasks.push(task);
+    tasks.push(newTask);
     localStorage.setItem("myTasks", JSON.stringify(tasks));
     setTitle("");
     setDescription("");
