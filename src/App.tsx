@@ -8,7 +8,7 @@ import FilterTask from "./components/FilterTask";
 
 function App() {
   const saved = localStorage.getItem("myTasks");
-  const taskList = saved ? JSON.parse(saved) : "";
+  const taskList = saved ? JSON.parse(saved) : [];
   const [tasks, setTasks] = useState(taskList);
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<string>("all");
@@ -17,24 +17,28 @@ function App() {
     localStorage.setItem("myTasks", JSON.stringify(tasks));
   }, [tasks]);
 
-  const filterTasks = tasks.filter((task: Task) => {
-    const query = search.toLowerCase();
+  let filterTasks;
 
-    const searchMatch =
-      !search || search.length < 3
-        ? true
-        : task.title.toLowerCase().includes(query) ||
-          task.description?.toLowerCase().includes(query);
+  if (tasks) {
+    filterTasks = tasks.filter((task: Task) => {
+      const query = search.toLowerCase();
 
-    const statusMatch =
-      filter === "all"
-        ? true
-        : filter === "completed"
-          ? task.completed === true
-          : task.completed === false;
+      const searchMatch =
+        !search || search.length < 3
+          ? true
+          : task.title.toLowerCase().includes(query) ||
+            task.description?.toLowerCase().includes(query);
 
-    return searchMatch && statusMatch;
-  });
+      const statusMatch =
+        filter === "all"
+          ? true
+          : filter === "completed"
+            ? task.completed === true
+            : task.completed === false;
+
+      return searchMatch && statusMatch;
+    });
+  }
 
   return (
     <div className="flex min-h-screen flex-col gap-2 p-2">

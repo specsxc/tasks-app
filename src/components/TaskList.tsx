@@ -32,6 +32,10 @@ export default function TaskList({
     setTasks(updatedTasks);
   }
 
+  if (tasks.length === 0)
+    return <div>No tasks yet. Create your first task!</div>;
+  else if (filterTasks.length === 0) return <div>No tasks found.</div>;
+
   return (
     <div className="flex flex-col gap-3">
       {filterTasks &&
