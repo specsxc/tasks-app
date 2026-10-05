@@ -41,7 +41,7 @@ export default function TaskList({
       {filterTasks &&
         filterTasks.map((task: Task) => (
           <div
-            className="flex items-center rounded-xl border border-white px-4 py-2"
+            className="flex items-center rounded-xl border border-white px-2 py-2"
             key={task.id}
           >
             <input
@@ -52,21 +52,21 @@ export default function TaskList({
               onChange={() => changeStatus(task.id)}
             />
 
-            <p className="w-3/5 text-left">{task.title}</p>
+            <p className="flex-6 text-left">{task.title}</p>
             <p
-              className={`w-1/5 ${task.completed ? "text-green-700" : "text-red-700"}`}
+              className={`mr-1 flex-1 ${task.completed ? "text-green-700" : "text-red-700"}`}
             >
               {task.completed ? "Completed" : "Active"}
             </p>
             <NavLink
               to={`/task/${task.id}`}
-              className="w-1/5 cursor-pointer hover:text-green-600"
+              className="mr-1 flex-1 cursor-pointer hover:text-green-600"
             >
               Edit
             </NavLink>
             <button
               onClick={() => showModal(task.id)}
-              className="w-1/5 cursor-pointer hover:text-red-700"
+              className="mr-1 flex-1 cursor-pointer hover:text-red-700"
             >
               Delete
             </button>
@@ -74,7 +74,7 @@ export default function TaskList({
         ))}
       {open && (
         <div className="fixed inset-0 flex items-center justify-center">
-          <div className="z-20 rounded-xl border border-white bg-gray-900 p-8">
+          <div className="z-20 rounded-xl border border-white bg-gray-700 p-8">
             <h2>Are you sure?</h2>
             <div className="mt-4 flex gap-6">
               <button

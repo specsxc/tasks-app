@@ -2,7 +2,7 @@ import type { FilterTaskProps } from "../types/types";
 
 export default function FilterTask({ filter, setFilter }: FilterTaskProps) {
   return (
-    <div className="mb-3 flex gap-6 px-2">
+    <div className="mb-3 flex flex-wrap gap-6 px-2">
       <p
         className={`cursor-pointer rounded-lg border border-white px-4 py-1 hover:text-blue-700 ${filter === "all" ? "border-blue-700 text-blue-700" : ""}`}
         onClick={() => setFilter("all")}

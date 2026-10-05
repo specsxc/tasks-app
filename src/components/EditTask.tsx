@@ -29,27 +29,29 @@ export default function EditTask() {
   return (
     <>
       <form onSubmit={editTask}>
-        <div className="m-4 mt-12 flex flex-col gap-3 rounded-2xl border border-white p-6">
+        <div className="my-4 rounded-2xl px-4 py-2 text-3xl">Edit task</div>
+        <div className="mx-4 flex flex-col gap-3 rounded-2xl border border-white bg-gray-700 p-6">
+          <h1 className="text-center text-xl">Edit task</h1>
           <h2>
-            <label>
-              Title:
+            <label className="flex flex-wrap items-center">
+              <span>Title:</span>
               <input
                 type="text"
                 name="title"
                 required
                 defaultValue={task.title}
-                className="ml-2"
+                className="ml-2 flex-1 rounded-2xl bg-gray-900 px-2"
                 onChange={(e) => setTitle(e.target.value)}
               />
             </label>
           </h2>
-          <label>
-            Description:
+          <label className="flex flex-wrap items-center">
+            <span>Description:</span>
             <input
               type="text"
               name="description"
               defaultValue={task.description}
-              className="ml-2"
+              className="ml-2 flex-1 rounded-2xl bg-gray-900 px-2"
               onChange={(e) => setDescription(e.target.value)}
             />
           </label>

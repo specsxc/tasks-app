@@ -30,31 +30,31 @@ export default function AddTask() {
     <>
       <div className="my-4 rounded-2xl px-4 py-2 text-3xl">Add new task</div>
 
-      <section className="mx-4 flex flex-col gap-2 rounded-2xl bg-gray-700 p-8">
-        <h2 className="text-center text-xl">Add new task</h2>
+      <section className="mx-4 flex flex-col gap-2 rounded-2xl border border-white bg-gray-700 p-8">
+        <h1 className="text-center text-xl">Add new task</h1>
         <form className="flex flex-col" onSubmit={addTask}>
-          <label className="my-3">
-            Task title:
+          <label className="my-3 flex flex-wrap items-center">
+            <span>Task title:</span>
             <input
               type="text"
               placeholder="Fix bugs"
               name="title"
               onChange={(e) => setTitle(e.target.value)}
               value={title}
-              className="ml-2"
+              className="ml-2 flex-1 rounded-2xl bg-gray-900 px-2"
               required
             />
           </label>
 
-          <label>
-            Task description:
+          <label className="flex flex-wrap items-center">
+            <span>Task description:</span>
             <input
               type="text"
               placeholder="Ticket #321"
               name="description"
               onChange={(e) => setDescription(e.target.value)}
               value={description}
-              className="ml-2"
+              className="ml-2 flex-1 rounded-2xl bg-gray-900 px-2"
             />
           </label>
           <div className="mt-2 flex justify-around gap-4">
