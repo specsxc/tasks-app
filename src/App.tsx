@@ -14,28 +14,19 @@ function App() {
   const [priorityFilter, setPriorityFilter] = useState<"All" | Priority>("All");
 
   const filteredTasks = tasks.filter((task: Task) => {
-    const query = search.toLowerCase();
+    const query = search.toLowerCase().trim();
 
-    const searchMatch = !search
-      ? true
-      : task.title.toLowerCase().includes(query) ||
-        task.description?.toLowerCase().includes(query);
+    const searchMatch =
+      !query ||
+      task.title.toLowerCase().includes(query) ||
+      task.description?.toLowerCase().includes(query);
 
     const statusMatch =
-      filter === "all"
-        ? true
-        : filter === "completed"
-          ? task.completed === true
-          : task.completed === false;
+      filter === "all" ||
+      (filter === "completed" ? task.completed : !task.completed);
 
     const priorityMatch =
-      priorityFilter === "All"
-        ? true
-        : priorityFilter === "Low"
-          ? task.priority === "Low"
-          : priorityFilter === "Medium"
-            ? task.priority === "Medium"
-            : priorityFilter === "High" && task.priority === "High";
+      priorityFilter === "All" || priorityFilter === task.priority;
 
     return searchMatch && statusMatch && priorityMatch;
   });
