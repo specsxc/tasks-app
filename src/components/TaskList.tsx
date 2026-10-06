@@ -47,7 +47,7 @@ export default function TaskList({
             <input
               type="checkbox"
               name="status"
-              defaultChecked={task.completed}
+              checked={task.completed}
               className="mr-2"
               onChange={() => changeStatus(task.id)}
             />
