@@ -1,10 +1,13 @@
 import type { Dispatch, SetStateAction } from "react";
 
+export type Priority = "Low" | "Medium" | "High";
+
 export type Task = {
   id: string;
   title: string;
   description: string;
   completed: boolean;
+  priority: Priority;
 };
 
 export type TasksListProps = {
