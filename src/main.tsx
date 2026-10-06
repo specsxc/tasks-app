@@ -17,6 +17,7 @@ const router = createBrowserRouter([
 ]);
 
 const root = document.getElementById("root")!;
+root.className = "w-11/12 flex flex-col items-center";
 
 createRoot(root).render(
   <StrictMode>

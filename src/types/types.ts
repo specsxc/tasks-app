@@ -1,14 +1,17 @@
 import type { Dispatch, SetStateAction } from "react";
 
+export type Priority = "Low" | "Medium" | "High";
+
 export type Task = {
-  id: number;
+  id: string;
   title: string;
   description: string;
   completed: boolean;
+  priority: Priority;
 };
 
 export type TasksListProps = {
-  filterTasks: Task[];
+  filteredTasks: Task[];
   tasks: Task[];
   setTasks: Dispatch<SetStateAction<Task[]>>;
 };
@@ -21,4 +24,6 @@ export type SearchTaskProps = {
 export type FilterTaskProps = {
   filter: string;
   setFilter: Dispatch<SetStateAction<string>>;
+  priorityFilter: "All" | Priority;
+  setPriorityFilter: Dispatch<SetStateAction<"All" | Priority>>;
 };

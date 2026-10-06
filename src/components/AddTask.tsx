@@ -1,40 +1,42 @@
 import { NavLink } from "react-router";
 import { useState } from "react";
-import type { Task } from "../types/types";
+import type { Priority, Task } from "../types/types";
 import type { SubmitEvent } from "react";
 import { useNavigate } from "react-router";
+import useTasks from "../hooks/useTasks";
 
 export default function AddTask() {
+  const { setTasks } = useTasks();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [priority, setPriority] = useState<Priority>("Medium");
   const navigate = useNavigate();
 
   function addTask(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!title) return;
-    const tasks = JSON.parse(localStorage.getItem("myTasks") || "[]");
     const newTask: Task = {
-      id: Date.now(),
+      id: crypto.randomUUID(),
       title,
       description,
       completed: false,
+      priority,
     };
-    tasks.push(newTask);
-    localStorage.setItem("myTasks", JSON.stringify(tasks));
+    setTasks((prev: Task[]) => [...prev, newTask]);
     setTitle("");
     setDescription("");
     navigate("/");
   }
 
   return (
-    <>
+    <div className="flex min-h-screen w-11/12 flex-col gap-2">
       <div className="my-4 rounded-2xl px-4 py-2 text-3xl">Add new task</div>
 
       <section className="mx-4 flex flex-col gap-2 rounded-2xl border border-white bg-gray-700 p-8">
         <h1 className="text-center text-xl">Add new task</h1>
-        <form className="flex flex-col" onSubmit={addTask}>
-          <label className="my-3 flex flex-wrap items-center">
-            <span>Task title:</span>
+        <form className="flex flex-col gap-2" onSubmit={addTask}>
+          <label className="flex flex-wrap items-center">
+            <h2>Task title:</h2>
             <input
               type="text"
               placeholder="Fix bugs"
@@ -47,7 +49,7 @@ export default function AddTask() {
           </label>
 
           <label className="flex flex-wrap items-center">
-            <span>Task description:</span>
+            <h2>Task description:</h2>
             <input
               type="text"
               placeholder="Ticket #321"
@@ -57,6 +59,41 @@ export default function AddTask() {
               className="ml-2 flex-1 rounded-2xl bg-gray-900 px-2"
             />
           </label>
+          <div className="my-2 border-t border-white"></div>
+          <h2 className="text-center text-lg">Select task priority</h2>
+          <div className="mt-2 flex flex-wrap items-center justify-center gap-6">
+            <label className="cursor-pointer rounded-2xl border border-white px-3 py-1 hover:border-blue-500 hover:text-blue-500 has-checked:border-blue-500 has-checked:text-blue-500">
+              <input
+                type="radio"
+                name="priority"
+                onChange={(e) => setPriority(e.target.value as Priority)}
+                value="Low"
+                className="sr-only"
+              />
+              <span>Low</span>
+            </label>
+            <label className="cursor-pointer rounded-2xl border border-white px-3 py-1 hover:border-blue-500 hover:text-blue-500 has-checked:border-blue-500 has-checked:text-blue-500">
+              <input
+                type="radio"
+                name="priority"
+                onChange={(e) => setPriority(e.target.value as Priority)}
+                value="Medium"
+                defaultChecked
+                className="sr-only"
+              />
+              <span>Medium</span>
+            </label>
+            <label className="cursor-pointer rounded-2xl border border-white px-3 py-1 hover:border-blue-500 hover:text-blue-500 has-checked:border-blue-500 has-checked:text-blue-500">
+              <input
+                type="radio"
+                name="priority"
+                onChange={(e) => setPriority(e.target.value as Priority)}
+                value="High"
+                className="sr-only"
+              />
+              <span>High</span>
+            </label>
+          </div>
           <div className="mt-2 flex justify-around gap-4">
             <button
               type="submit"
@@ -80,6 +117,6 @@ export default function AddTask() {
       >
         Back to main page
       </NavLink>
-    </>
+    </div>
   );
 }

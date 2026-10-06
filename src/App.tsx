@@ -1,68 +1,54 @@
 import "./index.css";
 import TaskList from "./components/TaskList";
-import { NavLink } from "react-router";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import SearchTask from "./components/SearchTask";
-import type { Task } from "./types/types";
+import type { Task, Priority } from "./types/types";
 import FilterTask from "./components/FilterTask";
+import useTasks from "./hooks/useTasks";
+import Header from "./components/Header";
 
 function App() {
-  const saved = localStorage.getItem("myTasks");
-  const taskList = saved ? JSON.parse(saved) : [];
-  const [tasks, setTasks] = useState(taskList);
+  const { tasks, setTasks } = useTasks();
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<string>("all");
+  const [priorityFilter, setPriorityFilter] = useState<"All" | Priority>("All");
 
-  useEffect(() => {
-    localStorage.setItem("myTasks", JSON.stringify(tasks));
-  }, [tasks]);
+  const filteredTasks = tasks.filter((task: Task) => {
+    const query = search.toLowerCase().trim();
 
-  let filterTasks;
+    const searchMatch =
+      !query ||
+      task.title.toLowerCase().includes(query) ||
+      task.description?.toLowerCase().includes(query);
 
-  if (tasks) {
-    filterTasks = tasks.filter((task: Task) => {
-      const query = search.toLowerCase();
+    const statusMatch =
+      filter === "all" ||
+      (filter === "completed" ? task.completed : !task.completed);
 
-      const searchMatch =
-        !search || search.length < 3
-          ? true
-          : task.title.toLowerCase().includes(query) ||
-            task.description?.toLowerCase().includes(query);
+    const priorityMatch =
+      priorityFilter === "All" || priorityFilter === task.priority;
 
-      const statusMatch =
-        filter === "all"
-          ? true
-          : filter === "completed"
-            ? task.completed === true
-            : task.completed === false;
-
-      return searchMatch && statusMatch;
-    });
-  }
+    return searchMatch && statusMatch && priorityMatch;
+  });
 
   return (
-    <div className="flex min-h-screen flex-col gap-2 p-2">
-      <header className="flex flex-col items-center justify-between gap-4 p-15 sm:flex-row">
-        <h1 className="text-3xl text-nowrap">Task Manager</h1>
-        <NavLink
-          to="addtask"
-          className="rounded-2xl border border-white px-2 py-2"
-        >
-          + Add task
-        </NavLink>
-      </header>
+    <div className="m-4 flex w-11/12 flex-col gap-2">
+      <Header></Header>
 
       <SearchTask search={search} setSearch={setSearch}></SearchTask>
 
-      <FilterTask filter={filter} setFilter={setFilter}></FilterTask>
+      <FilterTask
+        filter={filter}
+        setFilter={setFilter}
+        priorityFilter={priorityFilter}
+        setPriorityFilter={setPriorityFilter}
+      ></FilterTask>
 
-      <section className="text-center">
-        <TaskList
-          filterTasks={filterTasks}
-          tasks={tasks}
-          setTasks={setTasks}
-        ></TaskList>
-      </section>
+      <TaskList
+        filteredTasks={filteredTasks}
+        tasks={tasks}
+        setTasks={setTasks}
+      ></TaskList>
     </div>
   );
 }

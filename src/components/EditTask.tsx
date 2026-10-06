@@ -1,34 +1,36 @@
-import type { Task } from "../types/types";
+import type { Task, Priority } from "../types/types";
 import type { SubmitEvent } from "react";
 import { useParams } from "react-router";
 import { NavLink } from "react-router";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import useTasks from "../hooks/useTasks";
 
 export default function EditTask() {
   const { id } = useParams();
-  const taskList = JSON.parse(localStorage.getItem("myTasks") || "");
-  const task = taskList.find((task: Task) => task.id === Number(id)) || "";
+  const { tasks, setTasks } = useTasks();
+  const task = tasks.find((task: Task) => task.id === id) || "";
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
+  const [priority, setPriority] = useState(task.priority || "Medium");
   const navigate = useNavigate();
 
   function editTask(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
-    const editedTask = { ...task, title: title, description: description };
-    const newTasks = taskList.map((task: Task) => {
-      if (task.id === Number(id)) {
-        return editedTask;
+    if (!task || !tasks) return;
+    const editedTasks = tasks.map((task: Task) => {
+      if (task.id === id) {
+        return { ...task, title, description, priority };
       }
       return task;
     });
-    localStorage.setItem("myTasks", JSON.stringify(newTasks));
+    setTasks(editedTasks);
     navigate("/");
   }
 
   return (
-    <>
-      {!taskList || !task ? (
+    <div className="flex min-h-screen w-11/12 flex-col gap-2">
+      {!tasks || !task ? (
         <div className="my-6 text-center text-3xl">Task not found.</div>
       ) : (
         <form onSubmit={editTask}>
@@ -58,6 +60,43 @@ export default function EditTask() {
                 onChange={(e) => setDescription(e.target.value)}
               />
             </label>
+            <div className="my-2 border-t border-white"></div>
+            <h2 className="text-center text-lg">Edit task priority</h2>
+            <div className="mt-2 flex flex-wrap items-center justify-center gap-6">
+              <label className="cursor-pointer rounded-2xl border border-white px-3 py-1 hover:border-blue-500 hover:text-blue-500 has-checked:border-blue-500 has-checked:text-blue-500">
+                <input
+                  type="radio"
+                  name="priority"
+                  onChange={(e) => setPriority(e.target.value as Priority)}
+                  checked={priority === "Low"}
+                  value="Low"
+                  className="sr-only"
+                />
+                <span>Low</span>
+              </label>
+              <label className="cursor-pointer rounded-2xl border border-white px-3 py-1 hover:border-blue-500 hover:text-blue-500 has-checked:border-blue-500 has-checked:text-blue-500">
+                <input
+                  type="radio"
+                  name="priority"
+                  onChange={(e) => setPriority(e.target.value as Priority)}
+                  checked={priority === "Medium"}
+                  value="Medium"
+                  className="sr-only"
+                />
+                <span>Medium</span>
+              </label>
+              <label className="cursor-pointer rounded-2xl border border-white px-3 py-1 hover:border-blue-500 hover:text-blue-500 has-checked:border-blue-500 has-checked:text-blue-500">
+                <input
+                  type="radio"
+                  name="priority"
+                  onChange={(e) => setPriority(e.target.value as Priority)}
+                  checked={priority === "High"}
+                  value="High"
+                  className="sr-only"
+                />
+                <span>High</span>
+              </label>
+            </div>
             <div className="mt-2 flex justify-around gap-4">
               <button
                 type="submit"
@@ -81,6 +120,6 @@ export default function EditTask() {
       >
         Back to main page
       </NavLink>
-    </>
+    </div>
   );
 }
