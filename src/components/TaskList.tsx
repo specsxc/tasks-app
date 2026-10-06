@@ -41,35 +41,46 @@ export default function TaskList({
       {filteredTasks &&
         filteredTasks.map((task: Task) => (
           <div
-            className="flex items-center rounded-xl border border-white px-2 py-2"
+            className="flex flex-col items-center rounded-xl border border-white px-2 py-2"
             key={task.id}
           >
-            <input
-              type="checkbox"
-              name="status"
-              checked={task.completed}
-              className="mr-2"
-              onChange={() => changeStatus(task.id)}
-            />
-
-            <p className="flex-6 text-left">{task.title}</p>
-            <p
-              className={`mr-1 flex-1 ${task.completed ? "text-green-700" : "text-red-700"}`}
-            >
-              {task.completed ? "Completed" : "Active"}
-            </p>
-            <NavLink
-              to={`/task/${task.id}`}
-              className="mr-1 flex-1 cursor-pointer hover:text-green-600"
-            >
-              Edit
-            </NavLink>
-            <button
-              onClick={() => showModal(task.id)}
-              className="mr-1 flex-1 cursor-pointer hover:text-red-700"
-            >
-              Delete
-            </button>
+            <div className="flex w-11/12 items-center justify-between">
+              <div className="flex flex-col">
+                <p className="flex">{task.title}</p>
+                <p className="flex">{task.description}</p>
+              </div>
+              <p
+                className={`${task.priority === "High" ? "text-red-700" : task.priority === "Medium" ? "text-orange-400" : "text-blue-700"}`}
+              >
+                {task.priority}
+              </p>
+            </div>
+            <div className="mt-4 flex w-11/12 justify-between">
+              <input
+                type="checkbox"
+                name="status"
+                checked={task.completed}
+                className="mr-2"
+                onChange={() => changeStatus(task.id)}
+              />
+              <p
+                className={`mr-1 flex-1 ${task.completed ? "text-green-700" : "text-red-700"}`}
+              >
+                {task.completed ? "Completed" : "Active"}
+              </p>
+              <NavLink
+                to={`/task/${task.id}`}
+                className="mr-1 flex-1 cursor-pointer hover:text-green-600"
+              >
+                Edit
+              </NavLink>
+              <button
+                onClick={() => showModal(task.id)}
+                className="mr-1 flex-1 cursor-pointer hover:text-red-700"
+              >
+                Delete
+              </button>
+            </div>
           </div>
         ))}
       {open && (
