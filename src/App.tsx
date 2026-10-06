@@ -1,11 +1,11 @@
 import "./index.css";
 import TaskList from "./components/TaskList";
-import { NavLink } from "react-router";
 import { useState } from "react";
 import SearchTask from "./components/SearchTask";
 import type { Task, Priority } from "./types/types";
 import FilterTask from "./components/FilterTask";
 import useTasks from "./hooks/useTasks";
+import Header from "./components/Header";
 
 function App() {
   const { tasks, setTasks } = useTasks();
@@ -41,16 +41,8 @@ function App() {
   });
 
   return (
-    <div className="flex min-h-screen flex-col gap-2 p-2">
-      <header className="my-2 flex flex-col items-center justify-between gap-4 sm:flex-row">
-        <h1 className="text-3xl text-nowrap">Task Manager</h1>
-        <NavLink
-          to="addtask"
-          className="rounded-2xl border border-white px-2 py-2"
-        >
-          + Add task
-        </NavLink>
-      </header>
+    <div className="m-4 flex w-11/12 flex-col gap-2">
+      <Header></Header>
 
       <SearchTask search={search} setSearch={setSearch}></SearchTask>
 
@@ -61,13 +53,11 @@ function App() {
         setPriorityFilter={setPriorityFilter}
       ></FilterTask>
 
-      <section className="text-center">
-        <TaskList
-          filteredTasks={filteredTasks}
-          tasks={tasks}
-          setTasks={setTasks}
-        ></TaskList>
-      </section>
+      <TaskList
+        filteredTasks={filteredTasks}
+        tasks={tasks}
+        setTasks={setTasks}
+      ></TaskList>
     </div>
   );
 }

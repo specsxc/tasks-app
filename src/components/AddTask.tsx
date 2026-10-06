@@ -29,7 +29,7 @@ export default function AddTask() {
   }
 
   return (
-    <>
+    <div className="flex min-h-screen w-11/12 flex-col gap-2">
       <div className="my-4 rounded-2xl px-4 py-2 text-3xl">Add new task</div>
 
       <section className="mx-4 flex flex-col gap-2 rounded-2xl border border-white bg-gray-700 p-8">
@@ -117,6 +117,6 @@ export default function AddTask() {
       >
         Back to main page
       </NavLink>
-    </>
+    </div>
   );
 }

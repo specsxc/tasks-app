@@ -37,25 +37,32 @@ export default function TaskList({
   else if (filteredTasks.length === 0) return <div>No tasks found.</div>;
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex w-full flex-col justify-center gap-3">
       {filteredTasks &&
         filteredTasks.map((task: Task) => (
           <div
             className="flex flex-col items-center rounded-xl border border-white px-2 py-2"
             key={task.id}
           >
-            <div className="flex w-11/12 items-center justify-between">
+            <div className="flex w-11/12 items-center">
               <div className="flex flex-col">
                 <p className="flex">{task.title}</p>
                 <p className="flex">{task.description}</p>
               </div>
-              <p
-                className={`${task.priority === "High" ? "text-red-700" : task.priority === "Medium" ? "text-orange-400" : "text-blue-700"}`}
-              >
-                {task.priority}
-              </p>
+              {task.priority && (
+                <div className="ml-auto w-36 shrink-0">
+                  <p className="rounded-2xl px-3 py-1">
+                    Priority:
+                    <span
+                      className={`ml-4 ${task.priority === "High" ? "text-red-700" : task.priority === "Medium" ? "text-orange-400" : "text-blue-700"}`}
+                    >
+                      {task.priority}
+                    </span>
+                  </p>
+                </div>
+              )}
             </div>
-            <div className="mt-4 flex w-11/12 justify-between">
+            <div className="mt-4 flex w-11/12 justify-between text-center">
               <input
                 type="checkbox"
                 name="status"

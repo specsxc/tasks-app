@@ -29,7 +29,7 @@ export default function EditTask() {
   }
 
   return (
-    <>
+    <div className="flex min-h-screen w-11/12 flex-col gap-2">
       {!tasks || !task ? (
         <div className="my-6 text-center text-3xl">Task not found.</div>
       ) : (
@@ -118,6 +118,6 @@ export default function EditTask() {
       >
         Back to main page
       </NavLink>
-    </>
+    </div>
   );
 }
