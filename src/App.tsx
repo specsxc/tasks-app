@@ -32,7 +32,7 @@ function App() {
 
   return (
     <div className="flex min-h-screen flex-col gap-2 p-2">
-      <header className="flex flex-col items-center justify-between gap-4 p-15 sm:flex-row">
+      <header className="my-2 flex flex-col items-center justify-between gap-4 sm:flex-row">
         <h1 className="text-3xl text-nowrap">Task Manager</h1>
         <NavLink
           to="addtask"

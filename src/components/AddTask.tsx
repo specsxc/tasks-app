@@ -65,7 +65,6 @@ export default function AddTask() {
             <label className="rounded-2xl border border-white px-3 py-1 hover:border-blue-500 hover:text-blue-500 has-checked:border-blue-500 has-checked:text-blue-500">
               <input
                 type="radio"
-                id="low"
                 name="priority"
                 onChange={(e) => setPriority(e.target.value as Priority)}
                 value="Low"
@@ -76,7 +75,6 @@ export default function AddTask() {
             <label className="rounded-2xl border border-white px-3 py-1 hover:border-blue-500 hover:text-blue-500 has-checked:border-blue-500 has-checked:text-blue-500">
               <input
                 type="radio"
-                id="medium"
                 name="priority"
                 onChange={(e) => setPriority(e.target.value as Priority)}
                 value="Medium"
@@ -88,7 +86,6 @@ export default function AddTask() {
             <label className="rounded-2xl border border-white px-3 py-1 hover:border-blue-500 hover:text-blue-500 has-checked:border-blue-500 has-checked:text-blue-500">
               <input
                 type="radio"
-                id="high"
                 name="priority"
                 onChange={(e) => setPriority(e.target.value as Priority)}
                 value="High"

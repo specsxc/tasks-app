@@ -1,4 +1,4 @@
-import type { Task } from "../types/types";
+import type { Task, Priority } from "../types/types";
 import type { SubmitEvent } from "react";
 import { useParams } from "react-router";
 import { NavLink } from "react-router";
@@ -12,6 +12,7 @@ export default function EditTask() {
   const task = tasks.find((task: Task) => task.id === id) || "";
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
+  const [priority, setPriority] = useState(task.priority || "Medium");
   const navigate = useNavigate();
 
   function editTask(e: SubmitEvent<HTMLFormElement>) {
@@ -19,7 +20,7 @@ export default function EditTask() {
     if (!task || !tasks) return;
     const editedTasks = tasks.map((task: Task) => {
       if (task.id === id) {
-        return { ...task, title, description };
+        return { ...task, title, description, priority };
       }
       return task;
     });
@@ -59,6 +60,41 @@ export default function EditTask() {
                 onChange={(e) => setDescription(e.target.value)}
               />
             </label>
+            <div className="mt-2 flex flex-wrap items-center justify-between">
+              <label className="rounded-2xl border border-white px-3 py-1 hover:border-blue-500 hover:text-blue-500 has-checked:border-blue-500 has-checked:text-blue-500">
+                <input
+                  type="radio"
+                  name="priority"
+                  onChange={(e) => setPriority(e.target.value as Priority)}
+                  checked={priority === "Low"}
+                  value="Low"
+                  className="sr-only"
+                />
+                <span>Low</span>
+              </label>
+              <label className="rounded-2xl border border-white px-3 py-1 hover:border-blue-500 hover:text-blue-500 has-checked:border-blue-500 has-checked:text-blue-500">
+                <input
+                  type="radio"
+                  name="priority"
+                  onChange={(e) => setPriority(e.target.value as Priority)}
+                  checked={priority === "Medium"}
+                  value="Medium"
+                  className="sr-only"
+                />
+                <span>Medium</span>
+              </label>
+              <label className="rounded-2xl border border-white px-3 py-1 hover:border-blue-500 hover:text-blue-500 has-checked:border-blue-500 has-checked:text-blue-500">
+                <input
+                  type="radio"
+                  name="priority"
+                  onChange={(e) => setPriority(e.target.value as Priority)}
+                  checked={priority === "High"}
+                  value="High"
+                  className="sr-only"
+                />
+                <span>High</span>
+              </label>
+            </div>
             <div className="mt-2 flex justify-around gap-4">
               <button
                 type="submit"
