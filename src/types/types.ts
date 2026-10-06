@@ -24,4 +24,6 @@ export type SearchTaskProps = {
 export type FilterTaskProps = {
   filter: string;
   setFilter: Dispatch<SetStateAction<string>>;
+  priorityFilter: "All" | Priority;
+  setPriorityFilter: Dispatch<SetStateAction<"All" | Priority>>;
 };

@@ -3,7 +3,7 @@ import TaskList from "./components/TaskList";
 import { NavLink } from "react-router";
 import { useState } from "react";
 import SearchTask from "./components/SearchTask";
-import type { Task } from "./types/types";
+import type { Task, Priority } from "./types/types";
 import FilterTask from "./components/FilterTask";
 import useTasks from "./hooks/useTasks";
 
@@ -11,6 +11,7 @@ function App() {
   const { tasks, setTasks } = useTasks();
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<string>("all");
+  const [priorityFilter, setPriorityFilter] = useState<"All" | Priority>("All");
 
   const filteredTasks = tasks.filter((task: Task) => {
     const query = search.toLowerCase();
@@ -27,7 +28,16 @@ function App() {
           ? task.completed === true
           : task.completed === false;
 
-    return searchMatch && statusMatch;
+    const priorityMatch =
+      priorityFilter === "All"
+        ? true
+        : priorityFilter === "Low"
+          ? task.priority === "Low"
+          : priorityFilter === "Medium"
+            ? task.priority === "Medium"
+            : priorityFilter === "High" && task.priority === "High";
+
+    return searchMatch && statusMatch && priorityMatch;
   });
 
   return (
@@ -44,7 +54,12 @@ function App() {
 
       <SearchTask search={search} setSearch={setSearch}></SearchTask>
 
-      <FilterTask filter={filter} setFilter={setFilter}></FilterTask>
+      <FilterTask
+        filter={filter}
+        setFilter={setFilter}
+        priorityFilter={priorityFilter}
+        setPriorityFilter={setPriorityFilter}
+      ></FilterTask>
 
       <section className="text-center">
         <TaskList
