@@ -1,44 +1,34 @@
 import "./index.css";
 import TaskList from "./components/TaskList";
 import { NavLink } from "react-router";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import SearchTask from "./components/SearchTask";
 import type { Task } from "./types/types";
 import FilterTask from "./components/FilterTask";
+import useTasks from "./hooks/useTasks";
 
 function App() {
-  const saved = localStorage.getItem("myTasks");
-  const taskList = saved ? JSON.parse(saved) : [];
-  const [tasks, setTasks] = useState(taskList);
+  const { tasks, setTasks } = useTasks();
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState<string>("all");
 
-  useEffect(() => {
-    localStorage.setItem("myTasks", JSON.stringify(tasks));
-  }, [tasks]);
+  const filteredTasks = tasks.filter((task: Task) => {
+    const query = search.toLowerCase();
 
-  let filterTasks;
+    const searchMatch = !search
+      ? true
+      : task.title.toLowerCase().includes(query) ||
+        task.description?.toLowerCase().includes(query);
 
-  if (tasks) {
-    filterTasks = tasks.filter((task: Task) => {
-      const query = search.toLowerCase();
+    const statusMatch =
+      filter === "all"
+        ? true
+        : filter === "completed"
+          ? task.completed === true
+          : task.completed === false;
 
-      const searchMatch =
-        !search || search.length < 3
-          ? true
-          : task.title.toLowerCase().includes(query) ||
-            task.description?.toLowerCase().includes(query);
-
-      const statusMatch =
-        filter === "all"
-          ? true
-          : filter === "completed"
-            ? task.completed === true
-            : task.completed === false;
-
-      return searchMatch && statusMatch;
-    });
-  }
+    return searchMatch && statusMatch;
+  });
 
   return (
     <div className="flex min-h-screen flex-col gap-2 p-2">
@@ -58,7 +48,7 @@ function App() {
 
       <section className="text-center">
         <TaskList
-          filterTasks={filterTasks}
+          filteredTasks={filteredTasks}
           tasks={tasks}
           setTasks={setTasks}
         ></TaskList>

@@ -4,25 +4,25 @@ import { NavLink } from "react-router";
 
 export default function TaskList({
   tasks,
-  filterTasks,
+  filteredTasks,
   setTasks,
 }: TasksListProps) {
-  const [deleteId, setDeleteId] = useState<number | null>(null);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
 
-  function deleteTask(id: number | null) {
+  function deleteTask(id: string | null) {
     if (id === null) return;
     const filterTask = tasks.filter((task: Task) => task.id !== id);
     setTasks(filterTask);
     setOpen(false);
   }
 
-  function showModal(id: number) {
+  function showModal(id: string) {
     setOpen(true);
     setDeleteId(id);
   }
 
-  function changeStatus(id: number) {
+  function changeStatus(id: string) {
     const updatedTasks = tasks.map((task: Task) => {
       if (task.id === id) {
         return { ...task, completed: !task.completed };
@@ -34,12 +34,12 @@ export default function TaskList({
 
   if (tasks.length === 0)
     return <div>No tasks yet. Create your first task!</div>;
-  else if (filterTasks.length === 0) return <div>No tasks found.</div>;
+  else if (filteredTasks.length === 0) return <div>No tasks found.</div>;
 
   return (
     <div className="flex flex-col gap-3">
-      {filterTasks &&
-        filterTasks.map((task: Task) => (
+      {filteredTasks &&
+        filteredTasks.map((task: Task) => (
           <div
             className="flex items-center rounded-xl border border-white px-2 py-2"
             key={task.id}

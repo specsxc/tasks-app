@@ -4,31 +4,32 @@ import { useParams } from "react-router";
 import { NavLink } from "react-router";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import useTasks from "../hooks/useTasks";
 
 export default function EditTask() {
   const { id } = useParams();
-  const taskList = JSON.parse(localStorage.getItem("myTasks") || "");
-  const task = taskList.find((task: Task) => task.id === Number(id)) || "";
+  const { tasks, setTasks } = useTasks();
+  const task = tasks.find((task: Task) => task.id === id) || "";
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
   const navigate = useNavigate();
 
   function editTask(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
-    const editedTask = { ...task, title: title, description: description };
-    const newTasks = taskList.map((task: Task) => {
-      if (task.id === Number(id)) {
-        return editedTask;
+    if (!task || !tasks) return;
+    const editedTasks = tasks.map((task: Task) => {
+      if (task.id === id) {
+        return { ...task, title, description };
       }
       return task;
     });
-    localStorage.setItem("myTasks", JSON.stringify(newTasks));
+    setTasks(editedTasks);
     navigate("/");
   }
 
   return (
     <>
-      {!taskList || !task ? (
+      {!tasks || !task ? (
         <div className="my-6 text-center text-3xl">Task not found.</div>
       ) : (
         <form onSubmit={editTask}>

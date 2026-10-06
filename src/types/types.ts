@@ -1,14 +1,14 @@
 import type { Dispatch, SetStateAction } from "react";
 
 export type Task = {
-  id: number;
+  id: string;
   title: string;
   description: string;
   completed: boolean;
 };
 
 export type TasksListProps = {
-  filterTasks: Task[];
+  filteredTasks: Task[];
   tasks: Task[];
   setTasks: Dispatch<SetStateAction<Task[]>>;
 };

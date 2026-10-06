@@ -3,8 +3,10 @@ import { useState } from "react";
 import type { Task } from "../types/types";
 import type { SubmitEvent } from "react";
 import { useNavigate } from "react-router";
+import useTasks from "../hooks/useTasks";
 
 export default function AddTask() {
+  const { setTasks } = useTasks();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const navigate = useNavigate();
@@ -12,15 +14,13 @@ export default function AddTask() {
   function addTask(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!title) return;
-    const tasks = JSON.parse(localStorage.getItem("myTasks") || "[]");
     const newTask: Task = {
-      id: Date.now(),
+      id: crypto.randomUUID(),
       title,
       description,
       completed: false,
     };
-    tasks.push(newTask);
-    localStorage.setItem("myTasks", JSON.stringify(tasks));
+    setTasks((prev: Task[]) => [...prev, newTask]);
     setTitle("");
     setDescription("");
     navigate("/");
