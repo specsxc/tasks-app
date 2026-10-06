@@ -59,10 +59,10 @@ export default function AddTask() {
               className="ml-2 flex-1 rounded-2xl bg-gray-900 px-2"
             />
           </label>
-          <div className="border-y border-white"></div>
+          <div className="my-2 border-t border-white"></div>
           <h2 className="text-center text-lg">Select task priority</h2>
-          <div className="mt-2 flex flex-wrap items-center justify-between">
-            <label className="rounded-2xl border border-white px-3 py-1 hover:border-blue-500 hover:text-blue-500 has-checked:border-blue-500 has-checked:text-blue-500">
+          <div className="mt-2 flex flex-wrap items-center justify-center gap-6">
+            <label className="cursor-pointer rounded-2xl border border-white px-3 py-1 hover:border-blue-500 hover:text-blue-500 has-checked:border-blue-500 has-checked:text-blue-500">
               <input
                 type="radio"
                 name="priority"
@@ -72,7 +72,7 @@ export default function AddTask() {
               />
               <span>Low</span>
             </label>
-            <label className="rounded-2xl border border-white px-3 py-1 hover:border-blue-500 hover:text-blue-500 has-checked:border-blue-500 has-checked:text-blue-500">
+            <label className="cursor-pointer rounded-2xl border border-white px-3 py-1 hover:border-blue-500 hover:text-blue-500 has-checked:border-blue-500 has-checked:text-blue-500">
               <input
                 type="radio"
                 name="priority"
@@ -83,7 +83,7 @@ export default function AddTask() {
               />
               <span>Medium</span>
             </label>
-            <label className="rounded-2xl border border-white px-3 py-1 hover:border-blue-500 hover:text-blue-500 has-checked:border-blue-500 has-checked:text-blue-500">
+            <label className="cursor-pointer rounded-2xl border border-white px-3 py-1 hover:border-blue-500 hover:text-blue-500 has-checked:border-blue-500 has-checked:text-blue-500">
               <input
                 type="radio"
                 name="priority"

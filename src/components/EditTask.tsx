@@ -60,8 +60,10 @@ export default function EditTask() {
                 onChange={(e) => setDescription(e.target.value)}
               />
             </label>
-            <div className="mt-2 flex flex-wrap items-center justify-between">
-              <label className="rounded-2xl border border-white px-3 py-1 hover:border-blue-500 hover:text-blue-500 has-checked:border-blue-500 has-checked:text-blue-500">
+            <div className="my-2 border-t border-white"></div>
+            <h2 className="text-center text-lg">Edit task priority</h2>
+            <div className="mt-2 flex flex-wrap items-center justify-center gap-6">
+              <label className="cursor-pointer rounded-2xl border border-white px-3 py-1 hover:border-blue-500 hover:text-blue-500 has-checked:border-blue-500 has-checked:text-blue-500">
                 <input
                   type="radio"
                   name="priority"
@@ -72,7 +74,7 @@ export default function EditTask() {
                 />
                 <span>Low</span>
               </label>
-              <label className="rounded-2xl border border-white px-3 py-1 hover:border-blue-500 hover:text-blue-500 has-checked:border-blue-500 has-checked:text-blue-500">
+              <label className="cursor-pointer rounded-2xl border border-white px-3 py-1 hover:border-blue-500 hover:text-blue-500 has-checked:border-blue-500 has-checked:text-blue-500">
                 <input
                   type="radio"
                   name="priority"
@@ -83,7 +85,7 @@ export default function EditTask() {
                 />
                 <span>Medium</span>
               </label>
-              <label className="rounded-2xl border border-white px-3 py-1 hover:border-blue-500 hover:text-blue-500 has-checked:border-blue-500 has-checked:text-blue-500">
+              <label className="cursor-pointer rounded-2xl border border-white px-3 py-1 hover:border-blue-500 hover:text-blue-500 has-checked:border-blue-500 has-checked:text-blue-500">
                 <input
                   type="radio"
                   name="priority"

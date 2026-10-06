@@ -6,7 +6,7 @@ export default function Header() {
       <h1 className="text-3xl text-nowrap">Task Manager</h1>
       <NavLink
         to="addtask"
-        className="rounded-2xl border border-white px-2 py-2"
+        className="rounded-2xl border border-white px-4 py-2"
       >
         + Add task
       </NavLink>
